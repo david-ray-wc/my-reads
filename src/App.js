@@ -2,7 +2,7 @@ import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import './App.css'
 import myBooks from './temp-books'
-import BookShelf from './components/Bookshelf'
+import BookShelf from './components/BookShelf'
 
 class BooksApp extends React.Component {
   state = {
@@ -17,6 +17,12 @@ class BooksApp extends React.Component {
   }
 
   filteredBooks = (status) => this.state.myBooks.filter(book => book.status === status);
+
+  onBookStatusChange = (selectedBook, newStatus) => {
+    this.setState(prevState => ({
+      myBooks: prevState.myBooks.map(book => book.title === selectedBook.title ? book.status = newStatus : book)
+    }))
+  }
 
   render() {
     return (
@@ -51,16 +57,19 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               <div>
                 <BookShelf 
-                  bookshelfTitle='Currently Reading'  
-                  bookList={this.filteredBooks('CURRENTLY_READING')} 
+                  bookshelfTitle='Currently Reading'
+                  shelfStatus='currentlyReading'  
+                  bookList={this.filteredBooks('currentlyReading')}
                 />
                 <BookShelf 
-                  bookshelfTitle='Want to Read' 
-                  bookList={this.filteredBooks('WANT_TO_READ')} 
+                  bookshelfTitle='Want to Read'
+                  shelfStatus='wantToRead'
+                  bookList={this.filteredBooks('wantToRead')}
                 />
                 <BookShelf 
-                  bookshelfTitle='Read'  
-                  bookList={this.filteredBooks('HAVE_READ')} 
+                  bookshelfTitle='Read'
+                  shelfStatus='read'
+                  bookList={this.filteredBooks('read')}
                 />
               </div>
             </div>
