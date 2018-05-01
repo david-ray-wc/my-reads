@@ -26,13 +26,13 @@ const myBooks = [
   {
     title: 'The Corrections',
     author: 'Jonathan Franzen',
-    status: 'READ',
+    status: 'HAVE_READ',
     cover: 'https://images.pexels.com/photos/415318/pexels-photo-415318.jpeg?auto=compress&cs=tinysrgb&h=350'
   },
   {
     title: 'Smoke Dat',
     author: 'Kush Ganja',
-    status: 'READ',
+    status: 'HAVE_READ',
     cover: 'https://images.pexels.com/photos/858484/pexels-photo-858484.jpeg?auto=compress&cs=tinysrgb&h=350'
   }
 ];
