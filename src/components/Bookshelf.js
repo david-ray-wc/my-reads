@@ -7,7 +7,7 @@ const BookShelf = (props) => {
       <div className="bookshelf-books">
         <ol className="books-grid">
           {/* Map out all of the books */}
-          {props.bookList.filter(book => book.status === props.status).map(book => {
+          {props.bookList.map(book => {
             return (
               <li key={book.title}>
                 <div className="book">

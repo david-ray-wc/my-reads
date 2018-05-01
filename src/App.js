@@ -16,9 +16,7 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
-  filterBooks = (bookArray, status) => {
-    bookArray.filter(book => book.status !== status);
-  }
+  filteredBooks = (status) => this.state.myBooks.filter(book => book.status === status);
 
   render() {
     return (
@@ -53,19 +51,16 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               <div>
                 <BookShelf 
-                  bookshelfTitle='Currently Reading' 
-                  status='CURRENTLY_READING' 
-                  bookList={this.state.myBooks} 
+                  bookshelfTitle='Currently Reading'  
+                  bookList={this.filteredBooks('CURRENTLY_READING')} 
                 />
                 <BookShelf 
                   bookshelfTitle='Want to Read' 
-                  status='WANT_TO_READ' 
-                  bookList={this.state.myBooks} 
+                  bookList={this.filteredBooks('WANT_TO_READ')} 
                 />
                 <BookShelf 
-                  bookshelfTitle='Read' 
-                  status='HAVE_READ' 
-                  bookList={this.state.myBooks} 
+                  bookshelfTitle='Read'  
+                  bookList={this.filteredBooks('HAVE_READ')} 
                 />
               </div>
             </div>
