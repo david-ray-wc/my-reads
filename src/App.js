@@ -18,9 +18,13 @@ class BooksApp extends React.Component {
 
   filteredBooks = (status) => this.state.myBooks.filter(book => book.status === status);
 
-  onBookStatusChange = (selectedBook, newStatus) => {
+  bookStatusChange = (selectedBook, newStatus) => {
+    const myBooks = this.state.myBooks;
+    const bookIndex = myBooks.findIndex(book => book.name === selectedBook.name);
+
+    myBooks[bookIndex].status = newStatus;
     this.setState(prevState => ({
-      myBooks: prevState.myBooks.map(book => book.title === selectedBook.title ? book.status = newStatus : book)
+      myBooks
     }))
   }
 
@@ -60,16 +64,19 @@ class BooksApp extends React.Component {
                   bookshelfTitle='Currently Reading'
                   shelfStatus='currentlyReading'  
                   bookList={this.filteredBooks('currentlyReading')}
+                  onStatusChange={this.bookStatusChange}
                 />
                 <BookShelf 
                   bookshelfTitle='Want to Read'
                   shelfStatus='wantToRead'
                   bookList={this.filteredBooks('wantToRead')}
+                  onStatusChange={this.bookStatusChange}
                 />
                 <BookShelf 
                   bookshelfTitle='Read'
                   shelfStatus='read'
                   bookList={this.filteredBooks('read')}
+                  onStatusChange={this.bookStatusChange}
                 />
               </div>
             </div>
