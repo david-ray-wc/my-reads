@@ -11,13 +11,30 @@ class BooksApp extends React.Component {
     myBooks: myBooks
   };
 
+  bookStatusChange = (selectedBook, newStatus) => {
+    const myBooks = this.state.myBooks;
+    const bookIndex = myBooks.findIndex(
+      book => book.title === selectedBook.title
+    );
+
+    myBooks[bookIndex].status = newStatus;
+    this.setState(prevState => ({
+      myBooks
+    }));
+  };
+
   render() {
     return (
       <div className="app">
         <Route
           exact
           path="/"
-          render={() => <ListBook myBooks={this.state.myBooks} />}
+          render={() => (
+            <ListBook
+              myBooks={this.state.myBooks}
+              onBookStatusChange={this.bookStatusChange}
+            />
+          )}
         />
         <Route path="/search" render={() => <SearchPage />} />
       </div>
