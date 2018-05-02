@@ -1,5 +1,4 @@
 import React from 'react';
-// import * as BooksAPI from './BooksAPI'
 import './App.css';
 import myBooks from './temp-books';
 import SearchPage from './components/SearchPage';
@@ -36,7 +35,10 @@ class BooksApp extends React.Component {
             />
           )}
         />
-        <Route path="/search" render={() => <SearchPage />} />
+        <Route
+          path="/search"
+          render={() => <SearchPage myBooks={this.state.myBooks} />}
+        />
       </div>
     );
   }

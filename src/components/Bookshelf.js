@@ -40,7 +40,9 @@ const BookShelf = props => {
                     </div>
                   </div>
                   <div className="book-title">{book.title}</div>
-                  <div className="book-authors">{book.author}</div>
+                  {book.authors.map(author => (
+                    <div className="book-authors">{author}</div>
+                  ))}
                 </div>
               </li>
             );
