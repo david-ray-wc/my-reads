@@ -1,4 +1,5 @@
 import React from 'react';
+import Book from './Book';
 
 const BookShelf = props => {
   return (
@@ -10,40 +11,11 @@ const BookShelf = props => {
           {props.bookList.map(book => {
             return (
               <li key={book.title}>
-                <div className="book">
-                  <div className="book-top">
-                    <div
-                      className="book-cover"
-                      style={{
-                        width: 128,
-                        height: 193,
-                        backgroundImage: `url(${book.cover})`
-                      }}
-                    />
-                    <div className="book-shelf-changer">
-                      <select
-                        value={props.shelfStatus}
-                        onChange={event =>
-                          props.onStatusChange(book, event.target.value)
-                        }
-                      >
-                        <option value="none" disabled>
-                          Move to...
-                        </option>
-                        <option value="currentlyReading">
-                          Currently Reading
-                        </option>
-                        <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
-                        <option value="none">None</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="book-title">{book.title}</div>
-                  {book.authors.map(author => (
-                    <div className="book-authors">{author}</div>
-                  ))}
-                </div>
+                <Book
+                  book={book}
+                  shelfStatus={props.shelfStatus}
+                  onStatusChange={props.onStatusChange}
+                />
               </li>
             );
           })}

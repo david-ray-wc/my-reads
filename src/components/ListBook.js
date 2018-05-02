@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const ListBook = props => {
   const filteredBooks = status =>
-    props.myBooks.filter(book => book.status === status);
+    props.myBooks.filter(book => book.shelf === status);
 
   return (
     <div className="list-books">

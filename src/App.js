@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import myBooks from './temp-books';
+import * as BooksAPI from './BooksAPI';
 import SearchPage from './components/SearchPage';
 import ListBook from './components/ListBook';
 import { Route } from 'react-router-dom';
 
 class BooksApp extends React.Component {
   state = {
-    myBooks: myBooks
+    myBooks: []
   };
 
   bookStatusChange = (selectedBook, newStatus) => {
@@ -16,11 +16,18 @@ class BooksApp extends React.Component {
       book => book.title === selectedBook.title
     );
 
-    myBooks[bookIndex].status = newStatus;
+    myBooks[bookIndex].shelf = newStatus;
     this.setState(prevState => ({
       myBooks
     }));
+    BooksAPI.update(selectedBook, newStatus);
   };
+
+  componentDidMount() {
+    BooksAPI.getAll().then(books => {
+      this.setState({ myBooks: books });
+    });
+  }
 
   render() {
     return (

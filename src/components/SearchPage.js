@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from '../BooksAPI';
+import Book from './Book';
 
 class SearchPage extends Component {
   state = {
+    searchTerm: '',
     searchResults: []
   };
 
-  componentDidMount() {
-    BooksAPI.getAll().then(books => {
-      this.setState({ searchResults: books });
-    });
+  updateSearchTerm(term) {
+    this.setState({ searchTerm: term });
+    this.searchForBook(term);
+  }
+
+  searchForBook(input) {
+    BooksAPI.search(input).then(books =>
+      this.setState({ searchResults: books })
+    );
   }
 
   render() {
@@ -29,15 +36,24 @@ class SearchPage extends Component {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <input type="text" placeholder="Search by title or author" />
+            <input
+              type="text"
+              value={this.state.searchTerm}
+              onChange={term => this.updateSearchTerm(term.target.value)}
+              placeholder="Search by title or author"
+            />
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid" />
           <ol className="books-grid">
-            {this.state.searchResults.map(book => (
-              <li key={book.id}>{book.title}</li>
-            ))}
+            {!this.state.searchResults && <h2>No Search Results Found</h2>}
+            {this.state.searchResults &&
+              this.state.searchResults.map(book => (
+                <li key={book.id}>
+                  <Book book={book} />
+                </li>
+              ))}
           </ol>
         </div>
       </div>
