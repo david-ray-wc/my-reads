@@ -20,6 +20,10 @@ class SearchPage extends Component {
     );
   }
 
+  componentDidMount() {
+    BooksAPI.search('asd').then(e => console.log(e));
+  }
+
   render() {
     return (
       <div className="search-books">
@@ -45,9 +49,8 @@ class SearchPage extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid" />
           <ol className="books-grid">
-            {!this.state.searchResults ? (
+            {this.state.searchResults === 'error' ? (
               <h2>No Search Results Found</h2>
             ) : (
               this.state.searchResults &&
