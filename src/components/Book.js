@@ -14,7 +14,7 @@ const Book = props => {
         />
         <div className="book-shelf-changer">
           <select
-            value={props.shelfStatus}
+            value={!props.book.shelf ? 'none' : props.book.shelf}
             onChange={event =>
               props.onStatusChange(props.book, event.target.value)
             }
@@ -37,6 +37,7 @@ const Book = props => {
         props.book.authors.map(author => (
           <div className="book-authors">{author}</div>
         ))}
+      {!props.book.authors && <div className="book-authors">no author</div>}
     </div>
   );
 };

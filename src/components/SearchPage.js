@@ -47,13 +47,19 @@ class SearchPage extends Component {
         <div className="search-books-results">
           <ol className="books-grid" />
           <ol className="books-grid">
-            {!this.state.searchResults && <h2>No Search Results Found</h2>}
-            {this.state.searchResults &&
+            {!this.state.searchResults ? (
+              <h2>No Search Results Found</h2>
+            ) : (
+              this.state.searchResults &&
               this.state.searchResults.map(book => (
                 <li key={book.id}>
-                  <Book book={book} />
+                  <Book
+                    onStatusChange={this.props.onStatusChange}
+                    book={book}
+                  />
                 </li>
-              ))}
+              ))
+            )}
           </ol>
         </div>
       </div>
