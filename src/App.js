@@ -23,6 +23,13 @@ class BooksApp extends React.Component {
     BooksAPI.update(selectedBook, newStatus);
   };
 
+  addBookToLibrary(book, shelf) {
+    this.setState(prevState => ({
+      myBooks: this.state.myBooks.concat([book])
+    }))
+    BooksAPI.update(book, shelf);
+  }
+
   componentDidMount() {
     BooksAPI.getAll().then(books => {
       this.setState({ myBooks: books });
@@ -47,7 +54,7 @@ class BooksApp extends React.Component {
           render={() => (
             <SearchPage
               myBooks={this.state.myBooks}
-              onBookStatusChange={this.bookStatusChange}
+              onAddBook={this.addBookToLibrary}
             />
           )}
         />
