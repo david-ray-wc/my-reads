@@ -12,23 +12,23 @@ class BooksApp extends React.Component {
 
   bookStatusChange = (selectedBook, newStatus) => {
     const myBooks = this.state.myBooks;
-    const bookIndex = myBooks.findIndex(
-      book => book.title === selectedBook.title
-    );
+    if (!selectedBook.shelf || selectedBook.shelf === 'none') {
+      selectedBook.shelf = newStatus;
+      this.setState(prevState => ({
+        myBooks: prevState.myBooks.concat(selectedBook)
+      }))
+    } else {
+      const bookIndex = myBooks.findIndex(
+        book => book.title === selectedBook.title
+      );
 
-    myBooks[bookIndex].shelf = newStatus;
-    this.setState(prevState => ({
-      myBooks
-    }));
+      myBooks[bookIndex].shelf = newStatus;
+      this.setState(prevState => ({
+        myBooks
+      }));
+    }
     BooksAPI.update(selectedBook, newStatus);
   };
-
-  addBookToLibrary(book, shelf) {
-    this.setState(prevState => ({
-      myBooks: this.state.myBooks.concat([book])
-    }))
-    BooksAPI.update(book, shelf);
-  }
 
   componentDidMount() {
     BooksAPI.getAll().then(books => {
@@ -54,7 +54,7 @@ class BooksApp extends React.Component {
           render={() => (
             <SearchPage
               myBooks={this.state.myBooks}
-              onAddBook={this.addBookToLibrary}
+              onBookStatusChange={this.bookStatusChange}
             />
           )}
         />

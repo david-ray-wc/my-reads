@@ -6,7 +6,8 @@ import Book from './Book';
 class SearchPage extends Component {
   state = {
     searchTerm: '',
-    searchResults: []
+    searchResults: [],
+
   };
 
   updateSearchTerm(term) {
@@ -17,11 +18,18 @@ class SearchPage extends Component {
   }
 
   searchForBook(input) {
-    BooksAPI.search(input).then(books => {
-      this.setState({
-        searchResults: books
-      });
-    });
+    let myBooks = this.props.myBooks;
+    let filteredBooks = [];
+    !input ? this.setState({ searchTerm: '' }) :
+      BooksAPI.search(input.trim(), 20).then(books => {
+        books.error ? this.setState({ searchResults: [] }) :
+          filteredBooks = books.map(book => {
+            let myBook = myBooks.find(b => b.id === book.id);
+            book.shelf = myBook ? myBook.shelf : 'none';
+            return book
+          })
+        this.setState({ searchResults: filteredBooks })
+      })
   }
 
   render() {
@@ -51,13 +59,13 @@ class SearchPage extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {!searchResults || searchResults.error ? (
+            {!this.state.searchTerm || searchResults.error ? (
               <h2> No Search Results Found </h2>
             ) : (
                 this.state.searchResults.map(book => (
                   <li key={book.id}>
                     <Book
-                      onStatusChange={this.props.onAddBook}
+                      onStatusChange={this.props.onBookStatusChange}
                       book={book}
                     />
                   </li>

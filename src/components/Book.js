@@ -2,6 +2,7 @@ import React from 'react';
 
 const Book = props => {
   const book = props.book;
+  const { imageLinks, shelf, authors, title } = book;
   return (
     <div className="book">
       <div className="book-top">
@@ -11,16 +12,16 @@ const Book = props => {
             width: 128,
             height: 193,
             backgroundImage: `url(${
-              book.imageLinks ? book.imageLinks.smallThumbnail : ''
+              imageLinks ? imageLinks.smallThumbnail : ''
               })`
           }}
         />
         <div className="book-shelf-changer">
           <select
-            value={!book.shelf ? 'none' : book.shelf}
+            value={!shelf ? 'none' : shelf}
             onChange={event => props.onStatusChange(book, event.target.value)}
           >
-            <option value="none" disabled>
+            <option value="disabled" disabled>
               Move to...
             </option>
             <option value="currentlyReading"> Currently Reading </option>
@@ -30,15 +31,15 @@ const Book = props => {
           </select>
         </div>
       </div>
-      <div className="book-title"> {book.title} </div>
-      {typeof book.authors === 'string' && (
-        <div className="book-authors"> {book.authors} </div>
+      <div className="book-title"> {title} </div>
+      {typeof authors === 'string' && (
+        <div className="book-authors"> {authors} </div>
       )}
-      {typeof book.authors === 'object' &&
-        book.authors.map(author => (
+      {typeof authors === 'object' &&
+        authors.map(author => (
           <div className="book-authors" key={author}> {author} </div>
         ))}
-      {!book.authors && <div className="book-authors"> no author </div>}
+      {!authors && <div className="book-authors"></div>}
     </div>
   );
 };
